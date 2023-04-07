@@ -9,6 +9,33 @@
 
 // Створи функцію destroyBoxes(), яка очищає вміст div#boxes, у такий спосіб видаляючи всі створені елементи.
 
+let boxesStorage = [];
+let boxesLayout = 'embedded';
+
+const refs = {
+	boxesQuantity: document.querySelector('input[type="number"]'),
+	layoutOptions: document.querySelectorAll('input[type="radio"]'),
+	btnCreate: document.querySelector('button[data-create]'),
+	btnDestroy: document.querySelector('button[data-destroy]'),
+	boxesField: document.querySelector('#boxes'),
+};
+
+refs.layoutOptions.forEach(option => {
+	option.addEventListener('change', event => {
+		boxesLayout = event.target.value;
+	});
+});
+
+refs.btnCreate.addEventListener('click', () => {
+	cancelCollection();
+	createBoxes(Number(refs.boxesQuantity.value));
+});
+
+refs.btnDestroy.addEventListener('click', () => {
+	cancelCollection();
+	refs.boxesQuantity.value = '';
+});
+
 function getRandomHexColor() {
 	return `#${Math.floor(Math.random() * 16777215)
 		.toString(16)
@@ -69,30 +96,3 @@ function cancelCollection() {
 	boxesStorage = [];
 	refs.boxesField.innerText = '';
 }
-
-let boxesStorage = [];
-let boxesLayout = 'embedded';
-
-const refs = {
-	boxesQuantity: document.querySelector('input[type="number"]'),
-	layoutOptions: document.querySelectorAll('input[type="radio"]'),
-	btnCreate: document.querySelector('button[data-create]'),
-	btnDestroy: document.querySelector('button[data-destroy]'),
-	boxesField: document.querySelector('#boxes'),
-};
-
-refs.layoutOptions.forEach(option => {
-	option.addEventListener('change', event => {
-		boxesLayout = event.target.value;
-	});
-});
-
-refs.btnCreate.addEventListener('click', () => {
-	cancelCollection();
-	createBoxes(Number(refs.boxesQuantity.value));
-});
-
-refs.btnDestroy.addEventListener('click', () => {
-	cancelCollection();
-	refs.boxesQuantity.value = '';
-});
