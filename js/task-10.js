@@ -66,28 +66,18 @@ function createBoxes(amount) {
 function activateCollection(arr) {
 	let boxesBundle = '';
 
-	if (boxesLayout === 'embedded') {
-		arr.forEach(({ size, color }) => {
-			boxesBundle = `<div style="
-				display:flex;
-				align-items:center;
-				justify-content:center;
-				width:${size}px; 
+	arr.forEach(({ size, color }) => {
+		const boxStyle = `style="width:${size}px; 
 				height:${size}px; 
-				margin-inline:auto;
-				border:1px solid #ffffff;
-				background-color:${color};">${boxesBundle}</div>`;
-		});
-	} else {
-		arr.forEach(({ size, color }) => {
-			boxesBundle += `<div style="
-				width:${size}px; 
-				height:${size}px; 
-				margin:0 auto 5px;
-				border:1px solid #000000;
-				background-color:${color};"></div>`;
-		});
-	}
+				background-color:${color};"`;
+
+		if (boxesLayout === 'embedded') {
+			boxesBundle = `<div class="boxes__item-flex" ${boxStyle}>
+			${boxesBundle}</div>`;
+		} else {
+			boxesBundle += `<div class="boxes__item" ${boxStyle}></div>`;
+		}
+	});
 
 	refs.boxesField.insertAdjacentHTML('afterbegin', boxesBundle);
 }
